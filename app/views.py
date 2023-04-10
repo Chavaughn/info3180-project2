@@ -1,16 +1,9 @@
-"""
-Flask Documentation:     https://flask.palletsprojects.com/
-Jinja2 Documentation:    https://jinja.palletsprojects.com/
-Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
-This file creates your application.
-"""
 from app import app
 from flask import Flask, jsonify, request
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
 from wtforms import StringField, TextAreaField, FileField
 from wtforms.validators import DataRequired, ValidationError
-from app.models import db, Movie
 from app.forms import MovieForm
 from flask_wtf.csrf import generate_csrf
 
@@ -22,32 +15,6 @@ from flask_wtf.csrf import generate_csrf
 @app.route('/')
 def index():
     return jsonify(message="This is the beginning of our API")
-
-
-@app.route('/api/v1/movies', methods=['POST'])
-def movies():
-    form = MovieForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        description = form.description.data
-        poster_file = request.files['poster']
-        poster_filename = secure_filename(poster_file.filename)
-        poster_file.save(app.config['UPLOAD_FOLDER'] + '/' + poster_filename)
-        movie = Movie(title=title, description=description,
-                      poster=poster_filename)
-        db.session.add(movie)
-        db.session.commit()
-        response = {
-            'message': 'Movie Successfully added',
-            'title': movie.title,
-            'poster': movie.poster,
-            'description': movie.description
-        }
-        return jsonify(response), 201
-    else:
-        errors = form_errors(form)
-        response = {'errors': errors}
-        return jsonify(response), 400
 
 
 ###
