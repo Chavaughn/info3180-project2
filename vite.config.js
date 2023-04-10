@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -12,14 +11,16 @@ export default defineConfig({
             '^/api*': {
                 target: 'http://localhost:8080/',
             }
+
         }
     },
     plugins: [vue()],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src',
-                import.meta.url))
-
+                import.meta.url)),
+            '~bootstrap': fileURLToPath(new URL('node_modules/bootstrap',
+                import.meta.url)),
         }
-    }
+    },
 })
