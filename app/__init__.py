@@ -16,6 +16,7 @@ app.config.from_object(Config)
 app.config['SECRET_KEY']='Som3$ec5etK*y'
 
 app.config['UPLOAD_FOLDER'] = os.path.abspath('./uploads/')
+app.config['ASSESTS_FOLDER'] = os.path.abspath('./src/assets/')
 
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)

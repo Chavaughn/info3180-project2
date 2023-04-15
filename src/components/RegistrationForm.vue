@@ -1,89 +1,99 @@
 <template>
-    <div class="container">
-      <h1>Registration Form</h1>
-      <form @submit.prevent="submitForm">
-        <div class="form-group">
+  <div class="login-form">
+    <h1>Registration Form</h1>
+    <form id="RegisterForm" @submit.prevent="submitForm">
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="username">Username:</label>
-          <input type="text" id="username" v-model="username" required>
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <input class="form-control" type="text" name="username" id="username" required autocomplete="username" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required>
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <input class="form-control" type="password" name="password" id="password" required  />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="firstname">First Name:</label>
-          <input type="text" id="firstname" v-model="firstname" required>
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <input class="form-control" type="text" name="firstname" id="firstname" required autocomplete="given-name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="lastname">Last Name:</label>
-          <input type="text" id="lastname" v-model="lastname" required>
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <input class="form-control" type="text" name="lastname" id="lastname" required autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="email">Email:</label>
-          <input type="email" id="email" v-model="email" required>
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <input class="form-control" type="email" name="email" id="email" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="location">Location:</label>
-          <input type="text" id="location" v-model="location">
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <input class="form-control" type="text" name="location" id="location" autocomplete="address-line1" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="biography">Biography:</label>
-          <textarea id="biography" v-model="biography"></textarea>
         </div>
-        <div class="form-group">
+        <div class="col-md-12">
+          <textarea class="form-control" id="biography" name="biography"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
           <label for="profile_photo">Profile Photo:</label>
-          <input type="file" id="profile_photo" @change="handleFileUpload">
         </div>
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios'
-  
-  export default {
-    data() {
-      return {
-        username: '',
-        password: '',
-        firstname: '',
-        lastname: '',
-        email: '',
-        location: '',
-        biography: '',
-        profile_photo: null,
-        errors: []
-      }
-    },
-    methods: {
-      handleFileUpload(event) {
-        this.profile_photo = event.target.files[0]
-      },
-      submitForm() {
-        const formData = new FormData()
-        formData.append('username', this.username)
-        formData.append('password', this.password)
-        formData.append('firstname', this.firstname)
-        formData.append('lastname', this.lastname)
-        formData.append('email', this.email)
-        formData.append('location', this.location)
-        formData.append('biography', this.biography)
-        formData.append('profile_photo', this.profile_photo)
-  
-        axios.post('http://127.0.0.1:8080//api/v1/register', formData)
-          .then(response => {
-            this.$router.push('/login')
-          })
-          .catch(error => {
-            if (error.response && error.response.status === 409) {
-              this.errors.push(error.response.data.message)
-            } else {
-              this.errors.push('An error occurred. Please try again later.')
-            }
-          })
-      }
-    }
-  }
-  </script>
-  
+        <div class="col-md-12">
+          <input class="form-control" type="file" name="profile_photo" id="profile_photo" />
+        </div>
+      </div>
+      <div class="pt-5 col-md-12">
+        <button class="form-control btn btn-success" type="submit">Register</button>
+      </div>
+    </form>
+
+  </div>
+</template>
+
+<script setup>
+import axios from "axios";
+import { ref } from "vue";
+
+function submitForm() {
+  let registerForm = document.getElementById("RegisterForm");
+  let formData = new FormData(registerForm);
+  console.log(formData)
+  fetch("http://localhost:8080//api/v1/register", {
+    method: "POST",
+    body: formData,
+  })
+    .then(function (response) {
+      return response.json;
+    })
+    .then(function (data) {
+      window.location.href = "/login";
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+</script>

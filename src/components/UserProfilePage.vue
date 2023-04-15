@@ -53,7 +53,7 @@
         let token = localStorage.getItem('JWT');
   
       // Get user's posts
-      axios.get(`http://127.0.0.1:8080/api/v1/users/${this.id}/posts`, {
+      axios.get(`http://localhost:8080/api/v1/users/${this.id}/posts`, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Access-Control-Allow-Origin': '*',
@@ -72,7 +72,7 @@
     followUser() {
       let token = localStorage.getItem('JWT')
 
-      axios.post(`http://127.0.0.1:8080/api/v1/users/${this.id}/follow`, {},{
+      axios.post(`http://localhost:8080/api/v1/users/${this.id}/follow`, {},{
         headers: {
           'Authorization': `Bearer ${token}`,
           'Access-Control-Allow-Origin': '*',

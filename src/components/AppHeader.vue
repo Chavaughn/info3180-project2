@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">VueJS with Flask</a>
+        <a class="navbar-brand" href="/"><i class="fa fa-camera"></i> BuddyGram</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -34,6 +34,12 @@
             <li class="nav-item">
               <RouterLink  class="nav-link" to="/explore">Explore</RouterLink >
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" :to="`/users/${user_id}`">My Profile</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink  class="nav-link" to="/posts/new">Create Post</RouterLink >
+            </li>
           </ul>
         </div>
       </div>
@@ -43,6 +49,7 @@
 
 <script setup>
   import { RouterLink } from "vue-router";
+  let user_id = localStorage.getItem('user_id')
 </script>
 
 <style>

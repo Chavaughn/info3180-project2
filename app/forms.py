@@ -12,7 +12,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     location = StringField('Location', validators=[DataRequired()])
     biography = StringField('Biography', validators=[DataRequired()])
-    profile_photo = FileField('Profile Photo', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
+    profile_photo = FileField('Profile Photo', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
     submit = SubmitField('Register')
 
 class LoginForm(FlaskForm):

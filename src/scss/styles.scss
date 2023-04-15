@@ -1,2 +1,131 @@
 // Import all of Bootstrap's CSS
 @import "~bootstrap/scss/bootstrap";
+html {
+    min-height: fit-content;
+    background-color: rgb(235, 235, 235);
+    height: 100vh;
+    max-width: 100vw;
+}
+
+body {
+    min-height: 100vh;
+    background-color: rgb(235, 235, 235);
+    max-width: 100vw;
+    overflow-x: hidden;
+    padding: 0;
+}
+
+#app {
+    height: 100%;
+    max-width: 100vw;
+    flex: 1 0 auto;
+    position: absolute;
+    width: 100vw;
+    grid-template-rows: 5vh 95vh;
+}
+
+main {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100vw;
+    margin-bottom: 2rem;
+    min-height: calc(100vh - 100px);
+    padding-bottom: 100px;
+}
+
+header {
+    position: relative;
+    top: 0;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background-color: rgb(33, 37, 41);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 10px 0;
+    max-width: 100vw;
+}
+
+.main-content-view {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    max-width: 100vw;
+    flex-wrap: wrap;
+    gap: 1rem;
+    height: 100%;
+    padding-top: 2rem;
+    align-content: center;
+}
+
+.content-box-border {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.884);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 3rem;
+    width: 40vw;
+    align-self: center;
+    min-width: fit-content;
+    max-width: 45vw;
+}
+
+.landing {
+    height: 24rem;
+    max-width: 45vw;
+    min-width: 350px;
+}
+
+.form-body {
+    min-width: 350px;
+}
+
+.landing-inner {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 100%;
+    .header-text {
+        align-self: center;
+    }
+    .landing-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+    .btn {
+        font-size: large;
+        width: 45%;
+    }
+}
+
+.login-img {
+    max-width: 45vw;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    min-width: 350px;
+    align-self: center;
+    max-height: 24rem;
+}
+
+.login-form {
+    align-self: center;
+}
+
+.forms-view {
+    min-height: fit-content;
+    .register .content-box-border {
+        height: 80%;
+        min-height: fit-content;
+    }
+}

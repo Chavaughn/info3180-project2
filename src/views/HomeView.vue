@@ -1,36 +1,27 @@
-<script setup>
+<script>
 import { ref } from "vue";
-import { Tooltip, Popover, Button } from "bootstrap";
+import  HomePage  from "@/components/HomePage.vue";
+import loginImage from '@/assets/login-img.jpg'
 
-let message = ref("Hello World! This is a VueJS and Flask Starter Template.");
-
-new Tooltip(document.body, {
-  selector: "[data-bs-toggle='tooltip']",
-});
+export default {
+    name: "HomeView",
+    components:{
+        HomePage,
+    },
+  setup() {
+    const imageSrc = ref(loginImage);
+    return { imageSrc };
+  },
+};
 </script>
 
-<template>
-  <div class="container">
-    <div class="text-center">
-      <span
-      data-bs-toggle="tooltip"
-      data-bs-placement="bottom"
-      data-bs-html="true"
-      title="<u>Kill self now Yohance</u>"
-      >
-      <img
-        alt="Vue logo"
-        class="logo"
-        src="@/assets/logo.svg"
-        width="125"
-        height="125"
-      />
-    </span>
-    <h1>{{ message }}</h1>
+<template >
+    <img class="login-img" :src="imageSrc" alt="A pretty image">
+    <div class="content-box-border landing">
+        <HomePage />
     </div>
-  </div>
 </template>
 
 <style>
-/* Add any component specific styles here */
+
 </style>

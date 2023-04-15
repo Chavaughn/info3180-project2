@@ -39,6 +39,7 @@ class Post(db.Model):
     photo = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_on = db.Column(db.DateTime)
+    user = db.relationship('User', backref='posts')
 
     def __init__(self, caption, photo, user_id, created_on):
         self.caption = caption
@@ -51,6 +52,8 @@ class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post = db.relationship('Post', backref='likes')
+    user = db.relationship('User', backref='likes')
 
     def __init__(self, post_id, user_id):
         self.post_id = post_id

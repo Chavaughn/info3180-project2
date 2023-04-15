@@ -85,8 +85,9 @@ def register():
         }
         return jsonify(response), 201
 
-    # errors = form_errors(form)
-    response = {'errors':" errors"}
+    errors = form_errors(form)
+    response = {'errors':errors}
+    print(form.data)
     return jsonify(response), 400
 
 
@@ -126,8 +127,8 @@ def login():
         }
         return jsonify(response), 401
 
-    # errors = form_errors(form)
-    response = {'errors': "errors"}
+    errors = form_errors(form)
+    response = {'errors': errors}
     return jsonify(response), 400
 
 
@@ -353,6 +354,10 @@ def like_post(post_id):
 def get_photo(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+@app.route('/api/v1/site/<filename>')
+def get_site_img(filename):
+    return send_from_directory(app.config['ASSESTS_FOLDER'], filename)
+
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,access-control-allow-origin')
@@ -360,9 +365,9 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Credentials', 'true')
     return response
 
-# @app.route('/')
-# def index():
-#     return jsonify(message="This is the beginning of our API")
+@app.route('/')
+def index():
+    return jsonify(message="This is the beginning of our API")
 
 
 ###
@@ -372,17 +377,17 @@ def after_request(response):
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 
-# def form_errors(form):
-#     error_messages = []
-#     """Collects form errors"""
-#     for field, errors in form.errors.items():
-#         for error in errors:
-#             message = u"Error in the %s field - %s" % (
-#                     getattr(form, field).label.text,
-#                     error
-#                 )
-#             error_messages.append(message)
-#     return error_messages + list(form.errors.values())
+def form_errors(form):
+    error_messages = []
+    """Collects form errors"""
+    for field, errors in form.errors.items():
+        for error in errors:
+            message = u"Error in the %s field - %s" % (
+                    getattr(form, field).label.text,
+                    error
+                )
+            error_messages.append(message)
+    return error_messages + list(form.errors.values())
 
 
 
