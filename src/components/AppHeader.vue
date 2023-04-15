@@ -17,10 +17,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              <RouterLink  to="/" class="nav-link active">Home</RouterLink >
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
+              <RouterLink  class="nav-link" to="/about">About</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink  class="nav-link" to="/register">Register</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink  class="nav-link" to="/login">Login</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink  class="nav-link" to="/logout">Logout</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink  class="nav-link" to="/explore">Explore</RouterLink >
             </li>
           </ul>
         </div>
@@ -30,7 +42,7 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+  import { RouterLink } from "vue-router";
 </script>
 
 <style>
