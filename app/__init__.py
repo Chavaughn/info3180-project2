@@ -1,7 +1,7 @@
 import os
 import subprocess
 # Install required packages from requirements.txt
-# subprocess.call(['pip', 'install', '-r', 'requirements.txt'])
+subprocess.call(['pip', 'install', '-r', 'requirements.txt'])
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from .config import Config

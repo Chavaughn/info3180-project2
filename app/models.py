@@ -30,22 +30,43 @@ class User(db.Model):
         self.joined_on = joined_on
 
     def check_password(self, password):
-        return check_password_hash(self.password, password)    
+        return check_password_hash(self.password, password)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'email': self.email,
+            'location': self.location,
+            'biography': self.biography,
+            'profile_photo': self.profile_photo,
+            'joined_on': self.joined_on.strftime('%Y-%m-%d %H:%M:%S')
+        }
 
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
-    caption = db.Column(db.String(100))
+    caption = db.Column(db.String(500))
     photo = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_on = db.Column(db.DateTime)
     user = db.relationship('User', backref='posts')
+    liked_by = db.relationship('Like', backref='posts', lazy='dynamic')
 
     def __init__(self, caption, photo, user_id, created_on):
         self.caption = caption
         self.photo = photo
         self.user_id = user_id
         self.created_on = created_on
+
+    def num_likes(self):
+        return self.liked_by.count()
+
+    def get_likes(self):
+        return [like.user_id for like in self.liked_by]
+
 
 class Like(db.Model):
     __tablename__ = 'likes'
@@ -58,6 +79,13 @@ class Like(db.Model):
     def __init__(self, post_id, user_id):
         self.post_id = post_id
         self.user_id = user_id
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user': self.user.to_dict(),
+        }
+
 
 class Follow(db.Model):
     __tablename__ = 'follows'

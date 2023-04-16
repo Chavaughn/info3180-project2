@@ -281,13 +281,16 @@ def get_posts():
 
     # Loop through each post and serialize it
     for post in posts:
-        user = User.query.filter_by(id=post.user_id).first()
+        likes = post.get_likes()
         serialized_post = {
             'id': post.id,
-            'username': user.username,
+            'username': post.user.username,
+            'user_photo': url_for('get_photo', filename = post.user.profile_photo, _external = True),
             'caption': post.caption,
             'photo_url': url_for('get_photo', filename=post.photo, _external=True),
-            'created_on': post.created_on.strftime('%Y-%m-%d %H:%M:%S')
+            'num_likes': post.num_likes(),
+            'likes': likes,
+            'created_on': post.created_on.strftime('%d %b %Y')
         }
         serialized_posts.append(serialized_post)
 

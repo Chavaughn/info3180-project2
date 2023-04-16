@@ -48,7 +48,7 @@ function submitForm() {
       console.log(response.data);
       const token = response.data.access_token;
       localStorage.setItem("JWT", token);
-      window.location.href = `/users/${user_id}`;
+      window.location.href = `/explore`;
     })
     .catch((error) => {
       // Handle login error

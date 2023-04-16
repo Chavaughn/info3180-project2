@@ -129,3 +129,129 @@ header {
         min-height: fit-content;
     }
 }
+
+.red {
+    color: #ff0000;
+}
+
+.like-button {
+    cursor: pointer;
+}
+
+.profile-photo {
+    border-radius: 50vw;
+}
+
+.explore-page {
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+    align-content: flex-start;
+    .page {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 3rem;
+        .posts {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 70vw;
+            .post {
+                background-color: #ffffff;
+                border-radius: 0.5rem;
+                border: 1px solid rgba(0, 0, 0, 0.884);
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                width: 40vw;
+                align-self: center;
+                max-width: 45vw;
+                .post-creator {
+                    display: flex;
+                    flex-direction: row;
+                    padding-left: 0.5rem;
+                    padding-bottom: 0.5rem;
+                    h5 {
+                        padding-left: 0.5rem;
+                        align-self: center;
+                    }
+                    .profile-photo {
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
+                .post-body {
+                    img {
+                        width: 100%;
+                    }
+                    p {
+                        padding: 0.5rem;
+                    }
+                }
+                .post-footer {
+                    display: grid;
+                    grid-template-columns: auto 1fr;
+                    .like-button.liked {
+                        color: red;
+                    }
+                    i {
+                        padding: 0.5rem;
+                        text-align: left;
+                    }
+                    p {
+                        padding: 0.1rem;
+                        padding-right: 0.5rem;
+                        font-weight: 700;
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.user-profile-page {
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+    align-content: flex-start;
+    .page {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 3rem;
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            .user-info {
+                display: grid;
+                gap: 3rem;
+                grid-template-columns: 10vw 45vw 15vw;
+                background-color: #ffffff;
+                border-radius: 0.5rem;
+                border: 1px solid rgba(0, 0, 0, 0.884);
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                padding: 0.5rem;
+                width: 100%;
+                max-width: 98vw;
+                .profile-photo {
+                    height: 8rem;
+                    width: 8rem;
+                }
+            }
+            .user-posts {
+                display: grid;
+                gap: 1rem;
+                grid-template-columns: 25vw 25vw 25vw;
+                grid-template-rows: 25vw;
+                .post-image {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

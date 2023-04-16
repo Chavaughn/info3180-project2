@@ -4,8 +4,8 @@ import RegistrationForm from "@/views/RegistrationView.vue";
 import LoginForm from "@/views/LoginView.vue";
 import Logout from "@/components/Logout.vue";
 import PostForm from "@/components/PostForm.vue";
-import ExplorePage from "@/components/ExplorePage.vue";
-import UserProfilePage from "@/components/UserProfilePage.vue";
+import ExplorePage from "@/views/ExploreView.vue";
+import UserProfilePage from "@/views/UserProfileView.vue";
 
 const router = createRouter({
     history: createWebHistory(
