@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">VueJS with Flask</a>
+        <a class="navbar-brand" href="/"><i class="fa fa-camera"></i> BuddyGram</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -15,12 +15,24 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              <RouterLink v-if="!isAuthenticated" class="nav-link" to="/register">Register</RouterLink >
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
+              <RouterLink v-if="!isAuthenticated" class="nav-link" to="/login">Login</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink v-if="isAuthenticated" class="nav-link" to="/explore">Explore</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink v-if="isAuthenticated" class="nav-link" :to="`/users/${userId}`">My Profile</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink v-if="isAuthenticated" class="nav-link" to="/posts/new">Create Post</RouterLink >
+            </li>
+            <li class="nav-item">
+              <RouterLink v-if="isAuthenticated" class="nav-link" to="/logout">Logout</RouterLink >
             </li>
           </ul>
         </div>
@@ -29,10 +41,22 @@
   </header>
 </template>
 
-<script setup>
-import { RouterLink } from "vue-router";
+<script>
+export default {
+  computed: {
+    isAuthenticated() {
+      return localStorage.getItem('JWT') !== null;
+    },
+    userId() {
+      return localStorage.getItem('user_id');
+    }
+  }
+};
 </script>
 
 <style>
-/* Add any component specific styles here */
+  .navbar-nav {
+    float: right;
+    padding-right: 0.5rem;
+  }
 </style>
