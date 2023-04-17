@@ -28,6 +28,9 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+
+const errorMessage = ref(null);
+
 let username = ref("");
 let password = ref("");
 
@@ -53,6 +56,7 @@ function submitForm() {
     .catch((error) => {
       // Handle login error
       console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
     });
 }
 </script>

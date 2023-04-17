@@ -7,7 +7,7 @@
       </ul>
       </div>
     </div>
-    <button
+    <button 
       type="button"
       class="delete btn-close"
       aria-label="Close"
@@ -26,6 +26,7 @@ export default {
       type: Number,
       default: 30000, // 3 seconds
     },
+    errorMessage: String,
   },
   data() {
     return {

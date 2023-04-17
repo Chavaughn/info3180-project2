@@ -25,9 +25,11 @@
             </div>
           </div>
           <div class="follow-button-container">
+            <div v-if="errorMessage">{{ errorMessage }}</div>
             <button class="btn follow-button" v-if="!isFollowing" @click="followUser()">Follow</button>
             <button class="btn follow-button following" v-if="isFollowing" @click="unfollowUser()">Following</button>
           </div>
+
         </div>
       </div>
       <div class="user-posts">
@@ -46,16 +48,21 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 
+
+
 const user = ref({});
 const userPosts = ref([]);
 const followers = ref([]);
 const isFollowing = ref(false);
+const errorMessage = ref(null);
+//const errorDialog = ref(false);
 
 const props = defineProps({
   id: {
     type: String,
     required: true,
   },
+
 });
 
 onMounted(() => {
@@ -79,6 +86,8 @@ onMounted(() => {
     })
     .catch((error) => {
       console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
+      //errorDialog.value = true;
     });
 });
 
@@ -90,7 +99,7 @@ function numFollowers() {
 }
 function followUser() {
   let token = localStorage.getItem("JWT");
-
+ 
   axios
     .post(
       `http://localhost:8080/api/v1/users/${props.id}/follow`,
@@ -109,6 +118,7 @@ function followUser() {
     })
     .catch((error) => {
       console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
     });
 }
 
@@ -133,6 +143,7 @@ function unfollowUser() {
     })
     .catch((error) => {
       console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
     });
 }
 </script>

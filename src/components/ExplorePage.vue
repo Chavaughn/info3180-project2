@@ -35,6 +35,7 @@ import { RouterLink } from "vue-router";
 import { checkTokenExpiration } from './utils';
 
 const posts = ref([]);
+const errorMessage = ref(null);
 const token = localStorage.getItem('JWT');
 const user_id = localStorage.getItem('user_id');
 
@@ -53,6 +54,7 @@ onMounted(() => {
     })
     .catch(error => {
       console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
     });
 });
 
@@ -70,6 +72,7 @@ function likePost(postId) {
     })
     .catch(error => {
       console.log(error.response);
+      errorMessage.value = error.response.data.message;
     });
 }
 
@@ -87,6 +90,7 @@ function unlikePost(postId) {
     })
     .catch(error => {
       console.log(error.response);
+      errorMessage.value = error.response.data.message;
     });
 }
 

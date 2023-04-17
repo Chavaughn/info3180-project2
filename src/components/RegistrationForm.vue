@@ -78,6 +78,8 @@
 import axios from "axios";
 import { ref } from "vue";
 
+const errorMessage = ref(null);
+
 function submitForm() {
   let registerForm = document.getElementById("RegisterForm");
   let formData = new FormData(registerForm);
@@ -94,6 +96,7 @@ function submitForm() {
     })
     .catch(function (error) {
       console.log(error);
+      errorMessage.value = error.response.data.message;
     });
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
   <h2>New Post</h2>
   <div class="create-post-container">
+    <!--<div v-if="errorMessage">{{ errorMessage }}</div>-->
     <form @submit.prevent="submitForm" name="postForm" id="postForm">
       <div class="form-group">
         <label for="caption">Caption:</label>
@@ -22,6 +23,7 @@ import { RouterLink } from "vue-router";
 
 const token = localStorage.getItem('JWT');
 const userId = localStorage.getItem('user_id');
+const errorMessage = ref(null);
 
 function submitForm() {
   let postForm = document.getElementById("postForm");
@@ -39,6 +41,7 @@ function submitForm() {
     })
     .catch(error => {
       console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
     });
 }
 function onFileChange(e) {
