@@ -76,27 +76,31 @@
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
+
+const emit = defineEmits(['notification', 'type']);
 
 const errorMessage = ref(null);
 
 function submitForm() {
   let registerForm = document.getElementById("RegisterForm");
   let formData = new FormData(registerForm);
-  console.log(formData)
-  fetch("http://localhost:8080//api/v1/register", {
-    method: "POST",
-    body: formData,
+  axios.post("http://localhost:8080//api/v1/register", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
   })
     .then(function (response) {
-      return response.json;
-    })
-    .then(function (data) {
+      emit('notification', response.data.message);
+      emit('type', "success");
+      window.location.href = "#";
       window.location.href = "/login";
     })
     .catch(function (error) {
-      console.log(error);
-      errorMessage.value = error.response.data.message;
+      errorMessage.value = error.response.data.errors;
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
     });
 }
 </script>

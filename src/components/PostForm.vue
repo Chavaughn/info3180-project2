@@ -18,8 +18,11 @@
   
 <script setup>
 import axios from 'axios'
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 import { RouterLink } from "vue-router";
+
+const emit = defineEmits(['notification', 'type']);
+
 
 const token = localStorage.getItem('JWT');
 const userId = localStorage.getItem('user_id');
@@ -38,10 +41,14 @@ function submitForm() {
   })
     .then(response => {
       console.log(response.data);
+      emit('notification', response.data.message);
+      emit('type', "success");
     })
     .catch(error => {
-      console.log(error.response.data);
-      errorMessage.value = error.response.data.message;
+      errorMessage.value = error.response.data.errors;
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
     });
 }
 function onFileChange(e) {

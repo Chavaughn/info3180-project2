@@ -27,7 +27,9 @@
   
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
+const emit = defineEmits(['notification', 'type']);
+
 
 const errorMessage = ref(null);
 
@@ -48,15 +50,19 @@ function submitForm() {
       // Handle successful login response
       const user_id = response.data.id;
       localStorage.setItem("user_id", user_id);
-      console.log(response.data);
       const token = response.data.access_token;
       localStorage.setItem("JWT", token);
+      emit('notification', response.data.message);
+      emit('type', "success");
       window.location.href = `/explore`;
     })
     .catch((error) => {
       // Handle login error
-      console.log(error.response.data);
-      errorMessage.value = error.response.data.message;
+      console.log(error.response.data)
+      errorMessage.value = error.response.data.errors;
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
     });
 }
 </script>

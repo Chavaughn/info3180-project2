@@ -7,6 +7,14 @@ export default {
   components: {
     PostForm,
   },
+  methods: {
+    handleError(event){
+        this.$emit('notification', event)
+    },
+    handleMessageType(event){
+        this.$emit('type', event)
+    }
+  }
 };
 </script>
 
@@ -15,7 +23,7 @@ export default {
     <div class="page-title">
     </div>
     <div class="create-post-page">
-        <PostForm/>
+        <PostForm @notification = "handleError" @type = "handleMessageType" />
     </div>
   </div>
 </template>
