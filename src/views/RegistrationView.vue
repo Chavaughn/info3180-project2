@@ -6,7 +6,15 @@ export default {
     name: "RegistrationView",
     components:{
         RegistrationForm,
+    },
+    methods: {
+    handleError(event){
+        this.$emit('notification', event)
+    },
+    handleMessageType(event){
+        this.$emit('type', event)
     }
+  }
 };
 </script>
 
@@ -16,7 +24,7 @@ export default {
             <h2>Register</h2>
         </div>
         <div class="form-body register content-box-border">
-            <RegistrationForm />
+            <RegistrationForm @notification = "handleError" @type = "handleMessageType" />
         </div>
     </div>
 </template>

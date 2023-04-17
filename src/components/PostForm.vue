@@ -1,6 +1,7 @@
 <template>
   <h2>New Post</h2>
   <div class="create-post-container">
+    <!--<div v-if="errorMessage">{{ errorMessage }}</div>-->
     <form @submit.prevent="submitForm" name="postForm" id="postForm">
       <div class="form-group">
         <label for="caption">Caption:</label>
@@ -17,11 +18,15 @@
   
 <script setup>
 import axios from 'axios'
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 import { RouterLink } from "vue-router";
+
+const emit = defineEmits(['notification', 'type']);
+
 
 const token = localStorage.getItem('JWT');
 const userId = localStorage.getItem('user_id');
+const errorMessage = ref(null);
 
 function submitForm() {
   let postForm = document.getElementById("postForm");
@@ -36,9 +41,14 @@ function submitForm() {
   })
     .then(response => {
       console.log(response.data);
+      emit('notification', response.data.message);
+      emit('type', "success");
     })
     .catch(error => {
-      console.log(error.response.data);
+      errorMessage.value = error.response.data.errors;
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
     });
 }
 function onFileChange(e) {

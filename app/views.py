@@ -42,16 +42,16 @@ def register():
         # Check if the username is already taken
         if User.query.filter_by(username=username).first() is not None:
             response = {
-                'message': 'Username already taken'
+                'errors': 'Username already taken'
             }
-            return jsonify(response), 409
+            return jsonify(response), 400
 
         # Check if the email is already taken
         if User.query.filter_by(email=email).first() is not None:
             response = {
-                'message': 'Email already taken'
+                'errors': 'Email already taken'
             }
-            return jsonify(response), 409
+            return jsonify(response), 400
 
         # Create a new user instance
         user = User(
@@ -87,7 +87,7 @@ def register():
 
     errors = form_errors(form)
     response = {'errors':errors}
-    print(form.data)
+    print(response)
     return jsonify(response), 400
 
 
@@ -123,7 +123,7 @@ def login():
 
         # If the user is not found or their password is incorrect, return an error message
         response = {
-            'message': 'Invalid credentials'
+            'errors': 'Invalid credentials'
         }
         return jsonify(response), 401
 
@@ -159,7 +159,7 @@ def create_post(user_id):
             user = User.query.get(user_id)
             if user is None:
                 response = {
-                    'message': 'User not found'
+                    'errors': 'User not found'
                 }
                 return jsonify(response), 404
 
@@ -186,8 +186,8 @@ def create_post(user_id):
             return jsonify(response), 201
     else:
         return redirect(url_for('login'))
-    # errors = form_errors(form)
-    response = {'errors': "errors"}
+    errors = form_errors(form)
+    response = {'errors': errors}
     return jsonify(response), 400
 
 
@@ -198,7 +198,7 @@ def get_user_posts(user_id):
     user = User.query.filter_by(id=user_id).first()
     if not user:
         response = {
-            'message': 'User not found'
+            'errors': 'User not found'
         }
         return jsonify(response), 404
 
@@ -391,7 +391,7 @@ def form_errors(form):
                     error
                 )
             error_messages.append(message)
-    return error_messages + list(form.errors.values())
+    return error_messages
 
 
 

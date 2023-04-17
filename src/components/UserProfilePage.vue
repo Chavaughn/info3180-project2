@@ -26,8 +26,9 @@
           </div>
           <div class="follow-button-container">
             <button class="btn follow-button" v-if="!isFollowing" @click="followUser()">Follow</button>
-            <button class="btn follow-button following" v-if="isFollowing" @click="unfollowUser()">Following</button>
+            <button class="btn follow-button following" v-if="isFollowing" @click="followUser()">Following</button>
           </div>
+
         </div>
       </div>
       <div class="user-posts">
@@ -43,20 +44,25 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 import { RouterLink } from "vue-router";
 
 const user = ref({});
 const userPosts = ref([]);
 const followers = ref([]);
 const isFollowing = ref(false);
+const errorMessage = ref(null);
 
 const props = defineProps({
   id: {
     type: String,
     required: true,
-  },
+  }
+
 });
+
+const emit = defineEmits(['notification', 'type']);
+
 
 onMounted(() => {
   let token = localStorage.getItem("JWT");
@@ -69,17 +75,22 @@ onMounted(() => {
       },
     })
     .then((response) => {
-      console.log(response);
       user.value = response.data.user;
       userPosts.value = response.data.posts;
       followers.value = response.data.follows;
       if (followers.value.some((follower) => follower.follower_id = props.id)) {
         isFollowing.value = true;
       }
+      
+
     })
     .catch((error) => {
-      console.log(error.response.data);
-    });
+      errorMessage.value = error.response.data.msg;
+      console.log('Error:', errorMessage.value);
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
+    })
 });
 
 function numPosts() {
@@ -106,33 +117,15 @@ function followUser() {
       isFollowing.value = true;
       console.log(response.data);
       followers.value.push(response.data.follower);
+      emit('notification', response.data.message);
+      emit('type', "success");
     })
     .catch((error) => {
-      console.log(error.response.data);
-    });
-}
-
-function unfollowUser() {
-  let token = localStorage.getItem("JWT");
-
-  axios
-    .post(
-      `http://localhost:8080/api/v1/users/${props.id}/unfollow`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    )
-    .then((response) => {
-      isFollowing.value = true;
-      console.log(response.data);
-      followers.value.push(response.data.follower);
-    })
-    .catch((error) => {
-      console.log(error.response.data);
+      errorMessage.value = error.response.data.message;
+      console.log('Error:', errorMessage.value);
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
     });
 }
 </script>

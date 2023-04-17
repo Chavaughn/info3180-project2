@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa fa-camera"></i> BuddyGram</a>
+        <a class="navbar-brand" href="/"><i class="fa fa-camera"></i> PhotoGram</a>
         <button
           class="navbar-toggler"
           type="button"

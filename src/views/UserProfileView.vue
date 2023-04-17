@@ -1,3 +1,9 @@
+<script setup>
+import { ref, defineEmits } from "vue";
+
+const emits = defineEmits(['notification' , 'type']);
+</script>
+
 <script>
 import { ref } from "vue";
 import UserProfilePage from "@/components/UserProfilePage.vue";
@@ -13,6 +19,14 @@ export default {
       required: true,
     },
   },
+  methods: {
+    handleError(event){
+        this.$emit('notification', event)
+    },
+    handleMessageType(event){
+        this.$emit('type', event)
+    }
+  }
 };
 </script>
 
@@ -20,7 +34,7 @@ export default {
   <div class="profile-page">
     <div class="page-title"></div>
     <div class="user-profile-page">
-      <UserProfilePage :id="id" />
+      <UserProfilePage :id="id" @notification = "handleError" @type = "handleMessageType" />
     </div>
   </div>
 </template>

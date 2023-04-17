@@ -7,7 +7,7 @@
       </ul>
       </div>
     </div>
-    <button
+    <button 
       type="button"
       class="delete btn-close"
       aria-label="Close"
@@ -21,11 +21,12 @@ export default {
   name: "Notification",
   props: {
     type: String,
-    message: String,
+    message: Array,
     duration: {
       type: Number,
-      default: 30000, // 3 seconds
+      default: 300000,
     },
+    errorMessage: String,
   },
   data() {
     return {
@@ -48,11 +49,12 @@ export default {
 
 <style>
 .notification-container {
-  position: relative;
+  position: sticky;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  top: 0;
 }
 
 .notification {
@@ -84,14 +86,20 @@ export default {
 }
 .fade-in {
   animation: fadeIn 2s;
-  opacity: 1;
+  opacity: 0.8;
 }
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
-    opacity: 1;
+    opacity: 0.8;
   }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 </style>

@@ -14,7 +14,7 @@
         </div>
         <div class="post-footer">
           <i v-if="postLiked(post)" class="like-button fa fa-heart red form-control btn"
-            v-on:click="unlikePost(post.id)">{{ post.num_likes }}</i>
+            v-on:click="likePost(post.id)">{{ post.num_likes }}</i>
           <i v-else class="like-button fa fa-heart-o form-control btn" v-on:click="likePost(post.id)">{{ post.num_likes
           }}</i>
           <p>{{ post.created_on }}</p>
@@ -30,11 +30,15 @@
 
 <script setup>
 import axios from 'axios'
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
+
 import { RouterLink } from "vue-router";
 import { checkTokenExpiration } from './utils';
 
+const emit = defineEmits(['notification', 'type']);
+
 const posts = ref([]);
+const errorMessage = ref(null);
 const token = localStorage.getItem('JWT');
 const user_id = localStorage.getItem('user_id');
 
@@ -51,9 +55,12 @@ onMounted(() => {
       posts.value = response.data;
       console.log(posts.value);
     })
-    .catch(error => {
-      console.log(error.response.data);
-    });
+    .catch((error) => {
+      errorMessage.value = error.response.data.msg;
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
+      window.location.href = "#";
+    })
 });
 
 function likePost(postId) {
@@ -63,30 +70,17 @@ function likePost(postId) {
       'Access-Control-Allow-Origin': '*',
     }
   })
-    .then(response => {
+    .then(function (response) {
       let post = posts.value.find(p => p.id === postId);
       post.likes.push(response.data.like);
       post.num_likes = post.num_likes + 1;
+      emit('notification', response.data.message);
+      emit('type', "success");
     })
-    .catch(error => {
-      console.log(error.response);
-    });
-}
-
-function unlikePost(postId) {
-  axios.delete(`http://127.0.0.1:8080/api/v1/posts/${postId}/like`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Access-Control-Allow-Origin': '*',
-    }
-  })
-    .then(response => {
-      let post = posts.value.find(p => p.id === postId);
-      post.likes.splice(post.likes.indexOf(parseInt(user_id)), 1);
-      post.num_likes = post.num_likes - 1;
-    })
-    .catch(error => {
-      console.log(error.response);
+    .catch(function (error) {
+      errorMessage.value = error.response.data.message;
+      emit('notification', errorMessage.value);
+      emit('type', "danger");
     });
 }
 

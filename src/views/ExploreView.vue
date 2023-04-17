@@ -7,6 +7,14 @@ export default {
   components: {
     ExplorePage,
   },
+    methods: {
+    handleError(event){
+        this.$emit('notification', event)
+    },
+    handleMessageType(event){
+        this.$emit('type', event)
+    }
+  }
 };
 </script>
 
@@ -16,7 +24,7 @@ export default {
         <h2>Explore Posts</h2>
     </div>
     <div class="explore-page">
-        <ExplorePage />
+        <ExplorePage @notification = "handleError" @type = "handleMessageType" />
     </div>
   </div>
 </template>

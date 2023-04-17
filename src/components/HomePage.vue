@@ -1,6 +1,6 @@
 <template>
     <div class="landing-inner">
-      <h1 class="header-text"><i class="fa fa-camera"></i> BuddyGram</h1>
+      <h1 class="header-text"><i class="fa fa-camera"></i> PhotoGram</h1>
       <hr>
       <p>Your world at your fingertips! Share your favourite moments with friends family and the world!</p>
       <div class="landing-buttons">

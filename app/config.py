@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-from redis import Redis
 
 load_dotenv()  # load environment variables from .env if it exists.
 
