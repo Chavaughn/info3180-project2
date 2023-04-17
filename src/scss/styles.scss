@@ -138,8 +138,20 @@ header {
     cursor: pointer;
 }
 
+.like-button:hover {
+    color: #ff0000;
+}
+
+.fa-heart:hover {
+    color: #000000;
+}
+
 .profile-photo {
     border-radius: 50vw;
+}
+
+.page-title {
+    padding-left: 5vw;
 }
 
 .explore-page {
@@ -147,17 +159,17 @@ header {
     flex-direction: column;
     min-width: fit-content;
     align-content: flex-start;
+    width: 98vw;
     .page {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 3rem;
+        display: grid;
+        grid-template-columns: 80vw 15vw;
         .posts {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
             gap: 3rem;
             max-width: 70vw;
+            padding-left: 6rem;
             .post {
                 background-color: #ffffff;
                 border-radius: 0.5rem;
@@ -165,9 +177,8 @@ header {
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
                 padding-top: 0.5rem;
                 padding-bottom: 0.5rem;
-                width: 40vw;
                 align-self: center;
-                max-width: 45vw;
+                width: 100%;
                 .post-creator {
                     display: flex;
                     flex-direction: row;
@@ -176,6 +187,10 @@ header {
                     h5 {
                         padding-left: 0.5rem;
                         align-self: center;
+                        a {
+                            text-decoration: none;
+                            color: #000000;
+                        }
                     }
                     .profile-photo {
                         width: 45px;
@@ -199,6 +214,7 @@ header {
                     i {
                         padding: 0.5rem;
                         text-align: left;
+                        font-size: 2rem;
                     }
                     p {
                         padding: 0.1rem;
@@ -209,7 +225,14 @@ header {
                 }
             }
         }
+        .add-post-button a {
+            color: rgb(255, 255, 255);
+        }
     }
+}
+
+.profile-page {
+    width: 98vw;
 }
 
 .user-profile-page {
@@ -222,36 +245,157 @@ header {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 3rem;
+        align-self: center;
         .user-profile {
             display: flex;
             flex-direction: column;
             gap: 3rem;
             .user-info {
-                display: grid;
-                gap: 3rem;
-                grid-template-columns: 10vw 45vw 15vw;
-                background-color: #ffffff;
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #ffffffd2;
                 border-radius: 0.5rem;
                 border: 1px solid rgba(0, 0, 0, 0.884);
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-                padding: 0.5rem;
+                padding: 2rem;
                 width: 100%;
                 max-width: 98vw;
+                .photo-section {
+                    width: 250px;
+                }
                 .profile-photo {
-                    height: 8rem;
-                    width: 8rem;
+                    height: 15rem;
+                    width: 15rem;
+                    border-radius: 10px;
+                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                    border: 2px solid #8a8787;
+                }
+                @media screen and (max-width: 400px) {
+                    justify-items: center;
+                }
+                .about-section {
+                    margin-top: 1rem;
+                    padding: 1rem;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    margin-right: 20.5vw;
+                    .name {
+                        margin: 0;
+                        font-size: 2rem;
+                        font-weight: bold;
+                        margin-top: -1.2rem;
+                        padding-bottom: 0.2rem;
+                    }
+                    .location,
+                    .joined,
+                    .bio {
+                        margin: 0;
+                        font-size: 1.3rem;
+                        font-weight: lighter;
+                        color: #8a8787;
+                    }
+                    .bio {
+                        margin-top: 0.9rem;
+                    }
+                }
+                .number-section {
+                    margin-top: 1rem;
+                    padding: 1rem;
+                    .posts-followers {
+                        display: flex;
+                        margin-bottom: 3rem;
+                        .posts,
+                        .followers {
+                            font-size: 2.2rem;
+                            font-weight: lighter;
+                            padding-left: 2rem;
+                            color: #8a8787;
+                            text-align: center;
+                            .numbers {
+                                text-align: center;
+                                color: #000000;
+                                font-weight: 700;
+                                line-height: 0.4rem;
+                            }
+                        }
+                        .posts {
+                            padding-left: 0;
+                        }
+                    }
+                    .follow-button-container {
+                        width: 100%;
+                    }
+                    .follow-button {
+                        background-color: #3c9e03;
+                        border-radius: 5px;
+                        color: #ffffff;
+                        font-size: 1.2rem;
+                        width: 100%;
+                        border: 2px solid #4ed60080;
+                        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                    }
+                    .follow-button:hover {
+                        background-color: #68eb1c;
+                        color: #000000;
+                    }
+                    .following {
+                        background-color: #68eb1c;
+                        color: #000000;
+                        border: 2px solid #00000011;
+                    }
+                    .following:hover {
+                        background-color: #ff5100;
+                        color: #ffffff;
+                        border: 2px solid #00000011;
+                    }
                 }
             }
             .user-posts {
                 display: grid;
                 gap: 1rem;
-                grid-template-columns: 25vw 25vw 25vw;
-                grid-template-rows: 25vw;
-                .post-image {
+                grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
+                grid-template-rows: 550px;
+                .post {
+                    width: 100%;
+                    height: 550px;
+                }
+                .post-wrapper {
+                    position: relative;
                     width: 100%;
                     height: 100%;
+                    overflow: hidden;
+                    &:before {
+                        content: "";
+                        display: block;
+                        padding-top: 100%;
+                    }
+                    .post-image {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: fill;
+                        object-position: center;
+                    }
                 }
             }
         }
     }
+}
+
+.create-post-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ffffffd2;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.884);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    width: 100%;
+    max-width: 98vw;
+}
+
+.form-group {
+    padding-bottom: 2rem;
 }

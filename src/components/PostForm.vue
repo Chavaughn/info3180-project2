@@ -1,56 +1,49 @@
 <template>
-    <div class="container">
-      <h2>Create New Post</h2>
-      <form @submit.prevent="submitForm" id="postForm">
-        <div class="form-group">
-          <label for="caption">Caption:</label>
-          <input type="text" id="caption" v-model="caption">
-        </div>
-        <div class="form-group">
-          <label for="photo">Photo:</label>
-          <input type="file" id="photo" ref="photo" @change="onFileChange">
-        </div>
-        <button type="submit">Create Post</button>
-      </form>
-    </div>
-  </template>
+  <h2>New Post</h2>
+  <div class="create-post-container">
+    <form @submit.prevent="submitForm" name="postForm" id="postForm">
+      <div class="form-group">
+        <label for="caption">Caption:</label>
+        <textarea class="form-control" type="textarea" id="caption" name="caption"/>
+      </div>
+      <div class="form-group">
+        <label for="photo">Photo:</label>
+        <input class="form-control" type="file" id="photo" ref="photo" name="photo" @change="onFileChange">
+      </div>
+      <button class="form-control btn btn-success" type="submit">Create Post</button>
+    </form>
+  </div>
+</template>
   
-  <script>
-  import axios from 'axios'
-  
-  export default {
-    name: 'PostForm',
-    data() {
-      return {
-        userId: localStorage.getItem('user_id'),   
-      }
-    },
-  
-    methods: {
-      submitForm() {
-        let form_data = new FormData();
-        form_data.append('caption', this.caption);
-        form_data.append('photo', this.photo);
-        let token = localStorage.getItem('JWT');
+<script setup>
+import axios from 'axios'
+import { ref, onMounted } from "vue";
+import { RouterLink } from "vue-router";
 
-        axios.post(`http://127.0.0.1:8080/api/v1/users/${this.userId}/posts`, form_data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${token}`,
-            'Access-Control-Allow-Origin': '*',
-          }
-        })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error.response.data);
-        });
-      },
-      onFileChange(e) {
-        this.photo = e.target.files[0]
-      }
+const token = localStorage.getItem('JWT');
+const userId = localStorage.getItem('user_id');
+
+function submitForm() {
+  let postForm = document.getElementById("postForm");
+  let formData = new FormData(postForm);
+
+  axios.post(`http://127.0.0.1:8080/api/v1/users/${userId}/posts`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`,
+      'Access-Control-Allow-Origin': '*',
     }
-  }
-  </script>
+  })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error.response.data);
+    });
+}
+function onFileChange(e) {
+  this.photo = e.target.files[0]
+}
+
+</script>
   

@@ -11,18 +11,16 @@ export default {
     id: {
       type: String,
       required: true,
-    }
-}
+    },
+  },
 };
 </script>
 
 <template>
-    <div class="profile-page">
-    <div class="page-title">
-        <h2>Explore Posts</h2>
-    </div>
+  <div class="profile-page">
+    <div class="page-title"></div>
     <div class="user-profile-page">
-        <UserProfilePage :id= id />
+      <UserProfilePage :id="id" />
     </div>
   </div>
 </template>
