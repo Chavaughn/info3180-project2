@@ -207,7 +207,7 @@ def get_user_posts(user_id):
         'first_name': user.firstname,
         'last_name': user.lastname,
         'location': user.location,
-        'joined_on': user.joined_on,
+        'joined_on': user.joined_on.strftime('%b %Y'),
         'biography': user.biography,
         'profile_photo': url_for('get_photo', filename=user.profile_photo, _external=True)
     }
@@ -285,6 +285,7 @@ def get_posts():
         serialized_post = {
             'id': post.id,
             'username': post.user.username,
+            'user_id': post.user.id,
             'user_photo': url_for('get_photo', filename = post.user.profile_photo, _external = True),
             'caption': post.caption,
             'photo_url': url_for('get_photo', filename=post.photo, _external=True),
